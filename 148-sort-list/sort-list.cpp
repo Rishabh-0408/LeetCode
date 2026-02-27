@@ -30,9 +30,9 @@ public:
         if(list2 != nullptr){
             temp -> next = list2;
         }
-        ListNode* ans = dummy -> next;
-        delete dummy;
-        return ans;
+        // ListNode* ans = dummy -> next;
+        // delete dummy;
+        return dummy -> next;
     } 
     ListNode* findmiddle(ListNode* head){
         ListNode* slow = head;

@@ -10,22 +10,55 @@
  */
 class Solution {
 public:
+    ListNode* merge(ListNode* list1, ListNode* list2){
+        ListNode* dummy = new ListNode(0);
+        ListNode* temp = dummy;
+        while(list1 != nullptr && list2 != nullptr){
+            if(list1 -> val <= list2 -> val){
+                temp -> next = list1;
+                list1 = list1 -> next;
+            }
+            else{
+                temp -> next = list2;
+                list2 = list2 -> next;
+            }
+            temp = temp -> next;
+        }
+        if(list1 != nullptr){
+            temp -> next = list1;
+        }
+        if(list2 != nullptr){
+            temp -> next = list2;
+        }
+        ListNode* ans = dummy -> next;
+        delete dummy;
+        return ans;
+    } 
+    ListNode* findmiddle(ListNode* head){
+        ListNode* slow = head;
+        ListNode* fast = head->next;
+        while(fast != nullptr && fast -> next != nullptr){
+            slow = slow -> next;
+            fast = fast -> next -> next;
+        }
+        return slow;
+    }
     ListNode* sortList(ListNode* head) {
-        // if (!head || !head->next) return head;
-        vector<int> arr;
-        ListNode* temp = head;
-        int i = 0;
-        while (temp != nullptr){
-            arr.push_back(temp -> val);
-            temp = temp -> next;
+        //always write base case 
+        if (head == nullptr || head -> next == nullptr) {
+            return head;
         }
-        sort(arr.begin(),arr.end());
-        temp = head;
-        while (temp != nullptr){
-            temp -> val= arr[i];
-            i++;
-            temp = temp -> next;
-        }
-        return head;
+        ListNode* middle = findmiddle(head);
+        //divide the list into two parts
+        ListNode* right = middle -> next;
+        middle -> next = nullptr;
+        ListNode* left = head;
+
+        //recursion
+        left = sortList(head);
+        right = sortList(right);
+
+        //calling merge function
+        return merge(left,right);
     }
 };

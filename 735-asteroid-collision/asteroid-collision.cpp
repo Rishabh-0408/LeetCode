@@ -1,28 +1,29 @@
 class Solution {
 public:
     vector<int> asteroidCollision(vector<int>& asteroids) {
-        // int n =  asteroids.size();
-        bool collisionHappened = true;
-        while (collisionHappened) {
-            collisionHappened = false;
-        for(int i = 0; i < (int)asteroids.size() - 1; i++){
-            if(asteroids[i] > 0 && asteroids[i+1] < 0){
-                collisionHappened = true;
-                int leftAsteroid = asteroids[i];
-                int rightAsteroid = abs(asteroids[i+1]);
-                if(leftAsteroid > rightAsteroid){
-                    asteroids.erase(asteroids.begin() + i+1);
+        vector<int> st;
+        for(int i = 0; i < asteroids.size(); i++){
+            int current = asteroids[i];
+            bool destroyed = false;
+            while(!st.empty() && st.back() > 0 && current < 0){
+                if(st.back() < abs(current)){
+                    st.pop_back();
                 }
-                else if(leftAsteroid < rightAsteroid){
-                    asteroids.erase(asteroids.begin() + i);
+                else if(st.back() == abs(current))
+                {
+                    st.pop_back();
+                    destroyed = true;
+                    break;
                 }
                 else{
-                    asteroids.erase(asteroids.begin() + i, asteroids.begin() + i + 2);
+                    destroyed  = true;
+                    break;
                 }
-                break;
+            }
+            if (!destroyed) {
+                st.push_back(current);
             }
         }
-        }
-        return asteroids;
+        return st;
     }
 };

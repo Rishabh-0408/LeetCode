@@ -11,32 +11,22 @@
  */
 class Solution {
 public:
+    void bfs(TreeNode* root,int level, vector<vector<int>>& ans)
+    {
+        if(root == nullptr){
+            return;
+        }
+
+        if(ans.size() == level){
+            ans.push_back({});
+        }
+        ans[level].push_back(root -> val);
+        bfs(root->left,level+1,ans);
+        bfs(root->right,level+1,ans);
+    }
     vector<vector<int>> levelOrder(TreeNode* root) {
         vector<vector<int>> ans;
-        if(root == nullptr){
-            return ans;
-        }
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty())
-        {
-            vector<int> currlevel;
-            int size = q.size();
-            for(int i = 0; i < size; i++)
-            {
-               TreeNode* node = q.front();
-               q.pop();
-               currlevel.push_back(node -> val);
-
-               if(node -> left != nullptr){
-                q.push(node -> left);
-               }
-               if(node -> right != nullptr){
-                q.push(node -> right);
-               }
-            }
-            ans.push_back(currlevel);
-        }
+        bfs(root,0,ans);
         return ans;
     }
 };

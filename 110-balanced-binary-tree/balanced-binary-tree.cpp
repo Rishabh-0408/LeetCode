@@ -15,20 +15,17 @@ public:
         if(root == nullptr){
             return 0;
         }
-        return 1 + max(height(root->left),height(root->right));
+        int lh = height(root->left);
+        if(lh == -1) return -1;
+        int rh = height(root -> right);
+        if(rh == -1) return -1;
+
+        if(abs(lh-rh) > 1){
+            return -1;
+        }
+        return 1 + max(lh,rh);
     }
     bool isBalanced(TreeNode* root) {
-        if(root == nullptr){
-            return true;
-        }
-
-        int leftheight = height(root->left);
-        int rightheight = height(root->right);
-
-        if(abs(leftheight-rightheight) <= 1 && isBalanced(root->left) && isBalanced(root->right)){
-            return true;
-        }
-
-        return false;
+        return height(root) != -1;
     }
 };

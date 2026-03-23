@@ -5,19 +5,19 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def height(self, root: Optional[TreeNode]) -> int:
+    def checkheight(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
-        return 1 + max(self.height(root.left),self.height(root.right))
+        lh = self.checkheight(root.left)
+        if(lh == -1):
+            return -1
+        rh = self.checkheight(root.right)
+        if(rh == -1):
+            return -1
+        if(abs(lh-rh) > 1):
+            return -1
+
+        return 1 + max(lh,rh)
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        if not root:
-            return True
-        
-        lh = self.height(root.left)
-        rh = self.height(root.right)
-
-        if(abs(lh-rh) <= 1 and self.isBalanced(root.left) and self.isBalanced(root.right)):
-            return True
-
-        return False
+        return self.checkheight(root) != -1
         

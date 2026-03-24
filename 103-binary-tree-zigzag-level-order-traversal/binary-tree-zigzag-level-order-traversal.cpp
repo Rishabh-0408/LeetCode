@@ -20,11 +20,10 @@ public:
         queue<TreeNode* > q;
         q.push(root);
         int level = 0;
-        
+        bool flag = false;
         while(!q.empty()){
             int size = q.size();
             level++;
-            bool flag = false;
             vector<int> curr;
             for(int i=0; i<size; i++){
                 TreeNode* node = q.front();
@@ -37,14 +36,11 @@ public:
                     q.push(node->right);
                 }
             }
-            if(level % 2 == 0){
+            if(flag){//level % 2 == 0
                 reverse(curr.begin(),curr.end());
-                ans.push_back(curr);
             }
-            else{
-                ans.push_back(curr);
-            }
-            
+            ans.push_back(curr);
+            flag = !flag;
         }
         return ans;
     }

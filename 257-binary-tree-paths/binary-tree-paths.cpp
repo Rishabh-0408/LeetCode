@@ -21,7 +21,7 @@ public:
         str += to_string(root->val);
         if(root->left == nullptr && root->right == nullptr){
             ans.push_back(str);
-            str.clear();
+            //str.clear();
         }
         dfs(root->left,ans,str);
         dfs(root->right,ans,str);

@@ -15,11 +15,29 @@ public:
         if(root == nullptr){
             return new TreeNode(val);
         }
-        if(val > root -> val){
-            root -> right = insertIntoBST(root->right,val);
-        }
-        else{
-            root -> left = insertIntoBST(root->left,val);
+        TreeNode* curr = root;
+        while(true){
+            if(val < curr -> val){
+                if(curr ->left != nullptr){
+                    curr = curr -> left;
+                }
+                else{
+                    curr -> left = new TreeNode(val);
+                    break;
+                }
+            }
+            else if(val > curr -> val){
+                if(curr -> right != nullptr){
+                    curr = curr -> right;
+                }
+                else{
+                    curr -> right = new TreeNode(val);
+                    break;
+                }
+            }
+            else{
+                break;
+            }
         }
         return root;
     }

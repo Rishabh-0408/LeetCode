@@ -11,22 +11,15 @@
  */
 class Solution {
 public:
-    void temp(TreeNode* root, vector<int>& ans){
-        if(root == nullptr){
-            return;
-        }
-        temp(root->left,ans);
-        ans.push_back(root->val);
-        temp(root->right,ans);
-    }
+    TreeNode* prev = nullptr;
     bool isValidBST(TreeNode* root) {
-        vector<int> ans;
-        temp(root,ans);
-        for(int i = 1; i < ans.size(); i++){
-            if(ans[i] <= ans[i-1]){
-                return false;
-            }
-        }
-        return true;
+        if(!root) return true;
+        
+        if(!isValidBST(root->left)) return false;
+
+        if(prev != nullptr && root->val <= prev->val) return false;
+        prev = root;
+
+        return isValidBST(root->right);
     }
 };

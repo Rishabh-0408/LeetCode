@@ -1,17 +1,18 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        unordered_map<int,int> mpp;
-
-        for(int it:nums){
-            mpp[it]++;
-        }
-
-        for(auto [num,count]:mpp){
-            if(count == 1){
-                return num;
+        int ans = 0;
+        for(int i=0; i<32; i++){
+            int count = 0;
+            for(auto num:nums){
+                if(num & (1<<i)){
+                    count++;
+                }
+            }
+            if(count % 3 == 1){
+                ans = ans | (1<<i);
             }
         }
-        return -1;
+        return ans;
     }
 };
